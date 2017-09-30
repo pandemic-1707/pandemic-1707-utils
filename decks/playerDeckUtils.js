@@ -3,12 +3,6 @@ const events = require('../data/events.js')
 const deckUtils = require('./deckUtils.js')
 const playerUtils = require('../players/playerUtils.js')
 
-  const initPlayerDeck = (numPlayers) => {
-    let playerDeck = initShufflePlayerDeck(numPlayers)
-    let playerHandsAndDeck = initDealPlayerCards(numPlayers, playerDeck)
-    const initialPlayerDeck = shuffleInEpidemicsPlayerDeck(playerHandsAndDeck.playerDeck)
-    return { initialPlayerDeck: initialPlayerDeck, playerHands: playerHandsAndDeck.playerHands }
-  }
   // initial shuffle: returns a deck object of all city & event
   // cards shuffled together
   const initShufflePlayerDeck = () => {
@@ -45,7 +39,6 @@ const playerUtils = require('../players/playerUtils.js')
   // referenced from:
   // https://stackoverflow.com/questions/10865025/merge-flatten-an-array-of-arrays-in-javascript
   const flatten = (arr) => {
-        // console.log("THIS",arr)
     return arr.reduce(function (flat, toFlatten) {
       return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
     }, []);
@@ -60,7 +53,6 @@ const playerUtils = require('../players/playerUtils.js')
       let epidemicDeck = playerDeck.slice(i, i + numPerPiles)
       // insert epidemics into each pile
       epidemicDeck.push({ Epidemic: 'epidemic' })
-      // console.log("ITERATE", i, epidemicDeck)
       // shuffle each pile
       deckUtils.shuffle(epidemicDeck)
       piles.push(epidemicDeck)
@@ -68,8 +60,14 @@ const playerUtils = require('../players/playerUtils.js')
     // put piles back together
     // const epidemicDeck = [].concat.apply([], piles)
     const epidemicDeckFull = flatten(piles)
-    console.log(epidemicDeckFull)
     return epidemicDeckFull
+  }
+
+  const initPlayerDeck = (numPlayers, numEpidemics) => {
+    let initialPlayerDeck = initShufflePlayerDeck(numPlayers)
+    let playerHandsAndDeck = initDealPlayerCards(numPlayers, initialPlayerDeck)
+    const playerdeck = shuffleInEpidemicsPlayerDeck(playerHandsAndDeck.playerDeck, numEpidemics)
+    return { playerDeck: playerdeck, playerHands: playerHandsAndDeck.playerHands }
   }
 
 module.exports = {

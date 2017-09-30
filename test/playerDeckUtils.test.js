@@ -55,6 +55,7 @@ describe('#initDealPlayerCards', function () {
   });
 })
 
+// TODO: check if shuffled in right proportions
 describe('#shuffleInEpidemicsPlayerDeck', function () {
   it('returns deck with epidemic cards in portions', function () {
     let playerDeck = pdUtils.initShufflePlayerDeck(NUM_PLAYERS_4)
@@ -63,6 +64,19 @@ describe('#shuffleInEpidemicsPlayerDeck', function () {
     let epidemicCount = 0;
     for (let i = 0; i < initialPlayerDeck.length; i++) {
       if (initialPlayerDeck[i].Epidemic === 'epidemic') epidemicCount++
+    }
+    epidemicCount.should.equal(4)
+  });
+})
+
+describe('#initPlayerDeck', function () {
+  it('returns deck and player hands', function () {
+    let playerDeckHands = pdUtils.initPlayerDeck(NUM_PLAYERS_4, NUM_EPIDEMICS)
+    const deck = playerDeckHands.playerDeck
+    const hands = playerDeckHands.playerHands
+    let epidemicCount = 0;
+    for (let i = 0; i < deck.length; i++) {
+      if (deck[i].Epidemic === 'epidemic') epidemicCount++
     }
     epidemicCount.should.equal(4)
   });
