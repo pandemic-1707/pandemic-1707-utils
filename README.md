@@ -5,7 +5,7 @@ helper npm module library with backend game logic utils for pandemic-1707 game
 
 ## Installation
 
-  npm install scapegoat --save
+  npm install pandemic-1707-utils --save
 
 ## Usage
 
