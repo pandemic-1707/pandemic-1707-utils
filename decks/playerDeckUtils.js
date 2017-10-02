@@ -1,4 +1,4 @@
-const cities = require('../data/cities.js')
+const cities = require('../data/citiesColors') // only city names and colors
 const events = require('../data/events.js')
 const deckUtils = require('./deckUtils.js')
 const playerUtils = require('../players/playerUtils.js')

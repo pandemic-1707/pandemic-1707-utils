@@ -1,10 +1,10 @@
 const should = require('chai').should()
 const utils = require('../index')
 const pdUtils = utils.playerDeckUtils
-const citiesDeck = require('../data/infectionDeck') // using only city names for simple testing
-const citiesDeckFullObject = require('../data/cities')
-const citiesDeckFull = Object.keys(citiesDeckFullObject).map((cityName) => {
-  return { city: cityName, props: citiesDeckFullObject[cityName] }
+const citiesNames = require('../data/citiesNames') // only city names
+const citiesNamesFullObject = require('../data/citiesColors') // city names and colors
+const citiesNamesFull = Object.keys(citiesNamesFullObject).map((cityName) => {
+  return { city: cityName, props: citiesNamesFullObject[cityName] }
 })
 const eventsDeck = require('../data/events')
 
@@ -15,12 +15,12 @@ describe('#initShufflePlayerDeck', function () {
   it('returns shuffled deck of player and event cards', function () {
     // events (8) and cities (48) total to 56 card deck
     const initialDeck = pdUtils.initShufflePlayerDeck(NUM_PLAYERS_4)
-    const stringDeck = citiesDeck.join()
+    const stringDeck = citiesNames.join()
     initialDeck.length.should.equal(56)
     // test for randomized
     initialDeck.join().should.not.equal(stringDeck)
     // still have our elements in there
-    initialDeck.includes(citiesDeck[0])
+    initialDeck.includes(citiesNames[0])
     initialDeck.includes(eventsDeck[0])
   });
 })
@@ -41,11 +41,11 @@ describe('#initDealPlayerCards', function () {
     let foundCard = false
 
     // TODO: not recognizing card if in deck, debug 
-    // if (!deck.includes(citiesDeckFull[0])) {
+    // if (!deck.includes(citiesNamesFull[0])) {
     //   hands.forEach((hand) => {
     //     hand.forEach((card) => {
-    //       console.log("cards", card.city, citiesDeckFull[0].city)
-    //       if (card.city === citiesDeckFull[0].city) foundCard = true
+    //       console.log("cards", card.city, citiesNamesFull[0].city)
+    //       if (card.city === citiesNamesFull[0].city) foundCard = true
     //     })
     //   })
     // } else {
@@ -78,6 +78,8 @@ describe('#initPlayerDeck', function () {
     for (let i = 0; i < deck.length; i++) {
       if (deck[i].Epidemic === 'epidemic') epidemicCount++
     }
+    console.log('DECK', deck)
+    console.log('HANDS', hands)
     epidemicCount.should.equal(4)
   });
 })
